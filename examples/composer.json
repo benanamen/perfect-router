@@ -1,0 +1,25 @@
+{
+  "name": "krubio/perdect-router-examples",
+  "description": "Examples for Perfect Router",
+  "autoload": {
+    "psr-4": {
+      "PerfectApp\\": "src/"
+    }
+  },
+  "scripts": {
+    "start": "php -S localhost:8000"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "krubio/perfect-router": "dev-main"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+    "packages": [
+        {
+            "name": "krubio/perfect-container",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benanamen/perfect-container.git",
+                "reference": "2c879069a0f9c483e6ef30eee566b3ec614d1a3e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benanamen/perfect-container/zipball/2c879069a0f9c483e6ef30eee566b3ec614d1a3e",
+                "reference": "2c879069a0f9c483e6ef30eee566b3ec614d1a3e",
+                "shasum": ""
+            },
+            "require": {
+                "krubio/perfect-logger": "^0.1.0"
+            },
+            "time": "2023-10-13T21:08:51+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PerfectApp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Rubio",
+                    "email": "benanamen@users.noreply.github.com"
+                }
+            ],
+            "description": "A lightweight, reflection-based dependency injection container designed for simplicity and ease of use, enabling automatic resolution and management of class dependencies throughout your PHP application.",
+            "keywords": [
+                "Attribute Routing",
+                "autowire"
+            ],
+            "support": {
+                "issues": "https://github.com/benanamen/perfect-container/issues",
+                "source": "https://github.com/benanamen/perfect-container/tree/master"
+            },
+            "install-path": "../krubio/perfect-container"
+        },
+        {
+            "name": "krubio/perfect-logger",
+            "version": "v0.1.0",
+            "version_normalized": "0.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benanamen/perfect-logger.git",
+                "reference": "32e6d3d074b36e59c43ab343a117e8bf6102f916"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benanamen/perfect-logger/zipball/32e6d3d074b36e59c43ab343a117e8bf6102f916",
+                "reference": "32e6d3d074b36e59c43ab343a117e8bf6102f916",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^5.0",
+                "codeception/module-asserts": "*",
+                "phpstan/phpstan": "^1.10"
+            },
+            "time": "2023-08-04T03:39:13+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PerfectApp\\Logger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Rubio",
+                    "email": "ducatikevin@yahoo.com",
+                    "homepage": "https://github.com/benanamen/perfect-logger",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PSR-3 compliant logging library",
+            "keywords": [
+                "PSR-3 Logger Interface",
+                "logger",
+                "psr-3"
+            ],
+            "support": {
+                "issues": "https://github.com/benanamen/perfect-logger/issues",
+                "source": "https://github.com/benanamen/perfect-logger/tree/v0.1.0"
+            },
+            "install-path": "../krubio/perfect-logger"
+        },
+        {
+            "name": "krubio/perfect-router",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "..",
+                "reference": "b7b22c77252c9dfd7ce36ddbe5e517aee670b887"
+            },
+            "require": {
+                "krubio/perfect-container": "dev-master"
+            },
+            "require-dev": {
+                "codeception/codeception": "^5.0"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PerfectApp\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Rubio"
+                }
+            ],
+            "description": "A Perfect Router",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            },
+            "install-path": "../krubio/perfect-router"
+        },
+        {
+            "name": "psr/log",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "time": "2021-07-14T16:46:02+00:00",
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/3.0.0"
+            },
+            "install-path": "../psr/log"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

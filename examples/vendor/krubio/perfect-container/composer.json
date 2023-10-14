@@ -1,0 +1,25 @@
+{
+    "name": "krubio/perfect-container",
+    "description": "A lightweight, reflection-based dependency injection container designed for simplicity and ease of use, enabling automatic resolution and management of class dependencies throughout your PHP application.",
+    "keywords": [
+        "Autowire",
+        "Attribute Routing"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Rubio",
+            "email": "benanamen@users.noreply.github.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PerfectApp\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "krubio/perfect-logger": "^0.1.0"
+    }
+}

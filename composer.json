@@ -1,0 +1,27 @@
+{
+    "name": "krubio/perfect-router",
+    "description": "A Perfect Router",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PerfectApp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kevin Rubio"
+        }
+    ],
+    "require-dev": {
+        "codeception/codeception": "^5.0"
+    },
+    "require": {
+        "krubio/perfect-container": "dev-master"
+    }
+}

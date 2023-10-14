@@ -1,0 +1,33 @@
+{
+    "name": "krubio/perfect-logger",
+    "description": "A PSR-3 compliant logging library",
+    "keywords": [
+        "PSR-3",
+        "PSR-3 Logger Interface",
+        "Logger"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Rubio",
+            "email": "ducatikevin@yahoo.com",
+            "homepage": "https://github.com/benanamen/perfect-logger",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "psr/log": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PerfectApp\\Logger\\": "src/"
+        }
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.0",
+        "codeception/module-asserts": "*",
+        "phpstan/phpstan": "^1.10"
+    }
+}
