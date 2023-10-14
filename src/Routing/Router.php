@@ -2,11 +2,13 @@
 
 namespace PerfectApp\Routing;
 
+use Exception;
 use PerfectApp\Container\Container;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionException;
+use SplFileInfo;
 
 class Router
 {
@@ -18,36 +20,61 @@ class Router
         $this->container = $container;
     }
 
+    /**
+     * Auto-registers controllers from a specified directory.
+     *
+     * @param string $directory The directory to scan for controller files.
+     * @throws Exception If the directory does not exist.
+     */
     public function autoRegisterControllers(string $directory): void
     {
-        //var_dump("Attempting to Auto-Register Controllers from: " . $directory);  // Debug
         if (!is_dir($directory)) {
-            error_log("The directory $directory does not exist");
-            http_response_code(500);
-            die('Fatal Error. See Error log for details.');
+            throw new Exception("The directory $directory does not exist");
         }
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
         foreach ($files as $file) {
-
-            if ($file->isDir() || $file->getFilename()[0] === '.' || $file->getExtension() !== 'php') {
-                continue;
-            }
-            //var_dump("Including file: " . $file->getPathname());  // Debug
-            require_once $file->getPathname();
-            $className = basename($file->getPathname(), '.php');
-
-            //Testing
-            $namespace = $this->getNamespaceFromFile($file->getPathname());
-            $fullyQualifiedClassName = $namespace ? $namespace . '\\' . $className : $className;
-
-            if (class_exists($fullyQualifiedClassName)) {
-                //var_dump("Registering Controller: " . $className);  // Debug
-                $this->registerController($fullyQualifiedClassName);
+            if ($this->isValidFile($file)) {
+                $this->registerControllerFromFile($file);
             }
         }
     }
 
+    /**
+     * Validates if a file should be considered for controller registration.
+     *
+     * @param SplFileInfo $file The file to validate.
+     * @return bool True if the file is valid, false otherwise.
+     */
+    private function isValidFile(SplFileInfo $file): bool
+    {
+        return !$file->isDir() && $file->getFilename()[0] !== '.' && $file->getExtension() === 'php';
+    }
+
+    /**
+     * Registers a controller from a file.
+     *
+     * @param SplFileInfo $file The file to register the controller from.
+     * @throws Exception
+     */
+    private function registerControllerFromFile(SplFileInfo $file): void
+    {
+        require_once $file->getPathname();
+        $className = basename($file->getPathname(), '.php');
+        $namespace = $this->getNamespaceFromFile($file->getPathname());
+        $fullyQualifiedClassName = $namespace ? $namespace . '\\' . $className : $className;
+
+        if (class_exists($fullyQualifiedClassName)) {
+            $this->registerController($fullyQualifiedClassName);
+        }
+    }
+
+    /**
+     * Extracts the namespace from a PHP file.
+     *
+     * @param string $filePath The path to the PHP file.
+     * @return string|null The namespace if found, null otherwise.
+     */
     private function getNamespaceFromFile(string $filePath): ?string
     {
         $src = file_get_contents($filePath);
@@ -85,14 +112,18 @@ class Router
         return null;
     }
 
+    /**
+     * Registers a controller and its routes.
+     *
+     * @param string $controllerName The fully qualified name of the controller.
+     * @throws Exception If the reflection class cannot be created.
+     */
     public function registerController(string $controllerName): void
     {
         try {
             $reflectionClass = new ReflectionClass($controllerName);
         } catch (ReflectionException $e) {
-            error_log("Failed to create Controller ReflectionClass for $controllerName: {$e->getMessage()}");
-            http_response_code(500);
-            die('Fatal Error. See Error log for details.');
+            throw new Exception("Failed to create Controller ReflectionClass for $controllerName: {$e->getMessage()}");
         }
 
         foreach ($reflectionClass->getMethods() as $method) {
@@ -105,26 +136,25 @@ class Router
                     'controller' => $controllerName,
                     'action' => $method->getName(),
                 ];
-
-                // Debugging statement to see which routes are being registered
-                //var_dump("Reg'd route: " . $routeData->path . " for " . $controllerName . "::" . $method->getName());
             }
         }
     }
 
+
+    /**
+     * Dispatches the request to the appropriate controller action.
+     *
+     * @param string $requestUri The requested URI.
+     * @param string $requestMethod The HTTP method of the request.
+     * @throws Exception If no route matches the request.
+     */
     public function dispatch(string $requestUri, string $requestMethod): void
     {
-        //var_dump("Dispatching: " . $requestUri . " with Method: " . $requestMethod);  // Debug
-        //$matched = false; //debug
-
         foreach ($this->routes as $routeInfo) {
             $pattern = "@^" . str_replace("/", "\\/", $routeInfo['path']) . "$@";
 
             if (in_array($requestMethod, $routeInfo['methods']) && preg_match($pattern, $requestUri, $matches)) {
                 array_shift($matches); // Remove the entire string that was matched
-
-                //$matched = true;// Debug
-                //var_dump("Route Matched: " . $routeInfo['path']);  // Debug
 
                 $controllerName = $routeInfo['controller'];
                 $methodName = $routeInfo['action'];
@@ -135,14 +165,6 @@ class Router
             }
         }
 
-        //Debug
-        /*        if (!$matched) {
-                    //var_dump("Route Not Matched");  // Debug
-                    header("HTTP/1.0 404 Not Found");
-                    //require '404.html';
-                    echo "Route $requestUri with method $requestMethod not found.\n";
-                }//end debug*/
-
-        echo "PerfectApp\Routing\Route $requestUri with method $requestMethod not found.\n";
+        throw new Exception("Route $requestUri with method $requestMethod not found.");
     }
 }
