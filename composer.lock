@@ -343,12 +343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benanamen/perfect-container.git",
-                "reference": "0a8ad4bf59360b7ab4be84b2bd8747de047c8282"
+                "reference": "b3ed43adcbbb01d1ea76f5d90673d2901591d3e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benanamen/perfect-container/zipball/0a8ad4bf59360b7ab4be84b2bd8747de047c8282",
-                "reference": "0a8ad4bf59360b7ab4be84b2bd8747de047c8282",
+                "url": "https://api.github.com/repos/benanamen/perfect-container/zipball/b3ed43adcbbb01d1ea76f5d90673d2901591d3e6",
+                "reference": "b3ed43adcbbb01d1ea76f5d90673d2901591d3e6",
                 "shasum": ""
             },
             "require": {
@@ -382,7 +382,7 @@
                 "issues": "https://github.com/benanamen/perfect-container/issues",
                 "source": "https://github.com/benanamen/perfect-container/tree/master"
             },
-            "time": "2023-10-14T02:07:06+00:00"
+            "time": "2023-10-14T04:30:22+00:00"
         },
         {
             "name": "krubio/perfect-logger",
