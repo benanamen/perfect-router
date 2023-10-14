@@ -12,13 +12,11 @@ $logger = new FileLogger('errors.log');
 
 $container = new Container($logger);
 
-$router = new Router($container, $logger);
-
 // Bindings
 $container->bind(UserService::class, UserService::class);
 $container->bind(UserController::class, UserController::class);
 
-
+$router = new Router($container);
 $router->autoRegisterControllers(__DIR__ . '/src/Controllers');
 
 $requestUri = $_SERVER['REQUEST_URI'];

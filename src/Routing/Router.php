@@ -8,7 +8,14 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionException;
+use RuntimeException;
 use SplFileInfo;
+
+/* This seems to be version 2 from autowire version.
+Changes are throwing exceptions instead of die and sending error to error log.
+Changes made for Unit testing compatability
+
+*/
 
 class Router
 {
@@ -29,7 +36,7 @@ class Router
     public function autoRegisterControllers(string $directory): void
     {
         if (!is_dir($directory)) {
-            throw new Exception("The directory $directory does not exist");
+            throw new RuntimeException("The directory $directory does not exist");
         }
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
@@ -123,7 +130,7 @@ class Router
         try {
             $reflectionClass = new ReflectionClass($controllerName);
         } catch (ReflectionException $e) {
-            throw new Exception("Failed to create Controller ReflectionClass for $controllerName: {$e->getMessage()}");
+            throw new RuntimeException("Failed to create Controller ReflectionClass for $controllerName: {$e->getMessage()}");
         }
 
         foreach ($reflectionClass->getMethods() as $method) {
@@ -165,6 +172,6 @@ class Router
             }
         }
 
-        throw new Exception("Route $requestUri with method $requestMethod not found.");
+        throw new RuntimeException("Route $requestUri with method $requestMethod not found.");
     }
 }
