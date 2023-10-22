@@ -20,7 +20,11 @@ Changes made for Unit testing compatability
 class Router
 {
     private array $routes = [];
+
     private Container $container;
+
+    /** @var callable|null */
+    private $notFoundHandler = null;
 
     public function __construct(Container $container)
     {
@@ -147,6 +151,10 @@ class Router
         }
     }
 
+    public function setNotFoundHandler(callable $handler): void
+    {
+        $this->notFoundHandler = $handler;
+    }
 
     /**
      * Dispatches the request to the appropriate controller action.
@@ -170,6 +178,11 @@ class Router
                 call_user_func_array([$controller, $methodName], $matches);
                 return;
             }
+        }
+
+        $handler = $this->notFoundHandler;
+        if ($handler) {
+            call_user_func($handler, $requestUri, $requestMethod);
         }
 
         throw new RuntimeException("Route $requestUri with method $requestMethod not found.");
