@@ -6,6 +6,7 @@ use Exception;
 use PerfectApp\Container\Container;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
@@ -14,6 +15,7 @@ use SplFileInfo;
 /* This seems to be version 2 from autowire version.
 Changes are throwing exceptions instead of die and sending error to error log.
 Changes made for Unit testing compatability
+Now version 3 05-23-24
 
 */
 
@@ -59,7 +61,7 @@ class Router
      */
     private function isValidFile(SplFileInfo $file): bool
     {
-        return !$file->isDir() && $file->getFilename()[0] !== '.' && $file->getExtension() === 'php';
+        return $file->getExtension() === 'php' && !$file->isDir() && $file->getFilename()[0] !== '.';
     }
 
     /**
@@ -70,14 +72,20 @@ class Router
      */
     private function registerControllerFromFile(SplFileInfo $file): void
     {
-        require_once $file->getPathname();
-        $className = basename($file->getPathname(), '.php');
-        $namespace = $this->getNamespaceFromFile($file->getPathname());
-        $fullyQualifiedClassName = $namespace ? $namespace . '\\' . $className : $className;
-
-        if (class_exists($fullyQualifiedClassName)) {
-            $this->registerController($fullyQualifiedClassName);
+        if (!is_file($file->getPathname())) {
+            throw new RuntimeException("File {$file->getPathname()} does not exist.");
         }
+
+        require_once $file->getPathname();
+        $baseClassName = basename($file->getPathname(), '.php');
+        $namespace = $this->getNamespaceFromFile($file->getPathname());
+        $fullyQualifiedClassName = $namespace ? $namespace . '\\' . $baseClassName : $baseClassName;
+
+        if (!class_exists($fullyQualifiedClassName)) {
+            throw new RuntimeException("Class $fullyQualifiedClassName does not exist.");
+        }
+
+        $this->registerController($fullyQualifiedClassName);
     }
 
     /**
@@ -138,12 +146,12 @@ class Router
         }
 
         foreach ($reflectionClass->getMethods() as $method) {
-            $routeAttributes = $method->getAttributes(Route::class);
+            $routeAttributes = $method->getAttributes(Route::class, ReflectionAttribute::IS_INSTANCEOF);
             foreach ($routeAttributes as $routeAttribute) {
-                $routeData = $routeAttribute->newInstance();
+                $routeDefinition = $routeAttribute->newInstance();
                 $this->routes[] = [
-                    'path' => $routeData->path,
-                    'methods' => $routeData->methods,
+                    'path' => $routeDefinition->path,
+                    'methods' => $routeDefinition->methods,
                     'controller' => $controllerName,
                     'action' => $method->getName(),
                 ];
@@ -183,8 +191,10 @@ class Router
         $handler = $this->notFoundHandler;
         if ($handler) {
             call_user_func($handler, $requestUri, $requestMethod);
+            return;
         }
 
+        // If no handler is set throw an exception
         throw new RuntimeException("Route $requestUri with method $requestMethod not found.");
     }
 }
