@@ -19,6 +19,9 @@ use TypeError;
 #[CoversClass(Container::class)]
 class RouterTest extends TestCase
 {
+    /**
+     * @var Router
+     */
     private Router $router;
 
     /**
@@ -49,6 +52,10 @@ class RouterTest extends TestCase
         return $method->invokeArgs($object, $parameters);
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function testAutoRegisterControllersWithInvalidDirectory(): void
     {
         $this->expectException(Exception::class);
@@ -57,6 +64,10 @@ class RouterTest extends TestCase
         $this->router->autoRegisterControllers('non-existent-directory');
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function testAutoRegisterControllers_DirectoryDoesNotExist_ThrowsException(): void
     {
         // Define a non-existent directory
@@ -196,6 +207,10 @@ class RouterTest extends TestCase
 
         $this->invokeMethod($this->router, 'registerControllerFromFile', [$mockFile]);
     }
+
+    /**
+     * @return void
+     */
     public function testGetNamespaceFromFile_NoNamespace(): void
     {
         $filePath ='./tests/Fixtures/NonNamespacedClass.php';
@@ -226,6 +241,10 @@ class RouterTest extends TestCase
         $this->assertEquals('Tests\Fixtures', $namespace);
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function testRegisterController_InvalidController_ThrowsException(): void
     {
         $this->expectException(Exception::class);
@@ -270,6 +289,9 @@ class RouterTest extends TestCase
         $this->router->dispatch('/some/path/param1/param2', 'GET');
     }
 
+    /**
+     * @return void
+     */
     public function testDispatch_WithNotFoundHandler(): void
     {
         $notFoundHandlerCalled = false;
@@ -286,6 +308,10 @@ class RouterTest extends TestCase
         $this->assertTrue($notFoundHandlerCalled);
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function testDispatch_NoMatchingRoute_ThrowsException(): void
     {
         $requestUri = '/invalid-route';
