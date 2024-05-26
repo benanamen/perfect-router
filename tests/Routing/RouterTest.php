@@ -2,16 +2,16 @@
 
 namespace Tests\Routing;
 
-use ReflectionException;
-use ReflectionClass;
-use ReflectionMethod;
-use RuntimeException;
-use SplFileInfo;
 use Exception;
 use PerfectApp\Container\Container;
 use PerfectApp\Routing\Router;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
+use RuntimeException;
+use SplFileInfo;
 use Tests\Fixtures\DummyController;
 use TypeError;
 
@@ -213,7 +213,7 @@ class RouterTest extends TestCase
      */
     public function testGetNamespaceFromFile_NoNamespace(): void
     {
-        $filePath ='./tests/Fixtures/NonNamespacedClass.php';
+        $filePath = './tests/Fixtures/NonNamespacedClass.php';
 
         // Ensure the file path is valid and readable
         $this->assertFileExists($filePath, "File not found: $filePath");
@@ -235,7 +235,7 @@ class RouterTest extends TestCase
      */
     public function testGetNamespaceFromFile_WithNamespace(): void
     {
-        $filePath ='./tests/Fixtures/WithNamespaceController.php';
+        $filePath = './tests/Fixtures/WithNamespaceController.php';
         $namespace = $this->invokeMethod($this->router, 'getNamespaceFromFile', [$filePath]);
 
         $this->assertEquals('Tests\Fixtures', $namespace);
