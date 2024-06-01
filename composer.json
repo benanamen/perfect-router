@@ -22,6 +22,6 @@
         "codeception/codeception": "^5.0"
     },
     "require": {
-        "krubio/perfect-container": "v1.0.0"
+        "krubio/perfect-container": "^v1.0"
     }
 }
