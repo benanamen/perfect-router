@@ -4,30 +4,36 @@ namespace PerfectApp\Routing;
 
 use Exception;
 use PerfectApp\Container\Container;
+use PerfectApp\Exception\ClassNotFoundException;
+use PerfectApp\Exception\ControllerReflectionException;
+use PerfectApp\Exception\InvalidDirectoryException;
+use PerfectApp\Exception\InvalidFileException;
+use PerfectApp\Exception\RouteNotFoundException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
-use RuntimeException;
 use SplFileInfo;
-
-/* This seems to be version 2 from autowire version.
-Changes are throwing exceptions instead of die and sending error to error log.
-Changes made for Unit testing compatability
-Now version 3 05-23-24
-
-*/
 
 class Router
 {
+    /**
+     * @var array
+     */
     private array $routes = [];
 
+    /**
+     * @var Container
+     */
     private Container $container;
 
     /** @var callable|null */
     private $notFoundHandler = null;
 
+    /**
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -37,12 +43,15 @@ class Router
      * Auto-registers controllers from a specified directory.
      *
      * @param string $directory The directory to scan for controller files.
-     * @throws Exception If the directory does not exist.
+     * @throws ClassNotFoundException
+     * @throws InvalidDirectoryException If the directory does not exist.
+     * @throws InvalidFileException
+     * @throws Exception
      */
     public function autoRegisterControllers(string $directory): void
     {
         if (!is_dir($directory)) {
-            throw new RuntimeException("The directory $directory does not exist");
+            throw new InvalidDirectoryException("The directory $directory does not exist");
         }
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
@@ -65,15 +74,15 @@ class Router
     }
 
     /**
-     * Registers a controller from a file.
-     *
-     * @param SplFileInfo $file The file to register the controller from.
-     * @throws Exception
+     * @param SplFileInfo $file
+     * @return void
+     * @throws ClassNotFoundException
+     * @throws InvalidFileException|Exception
      */
     private function registerControllerFromFile(SplFileInfo $file): void
     {
         if (!is_file($file->getPathname())) {
-            throw new RuntimeException("File {$file->getPathname()} does not exist.");
+            throw new InvalidFileException("File {$file->getPathname()} does not exist.");
         }
 
         require_once $file->getPathname();
@@ -82,7 +91,7 @@ class Router
         $fullyQualifiedClassName = $namespace ? $namespace . '\\' . $baseClassName : $baseClassName;
 
         if (!class_exists($fullyQualifiedClassName)) {
-            throw new RuntimeException("Class $fullyQualifiedClassName does not exist.");
+            throw new ClassNotFoundException("Class $fullyQualifiedClassName does not exist.");
         }
 
         $this->registerController($fullyQualifiedClassName);
@@ -142,7 +151,7 @@ class Router
         try {
             $reflectionClass = new ReflectionClass($controllerName);
         } catch (ReflectionException $e) {
-            throw new RuntimeException("Failed to create Controller ReflectionClass for $controllerName: {$e->getMessage()}");
+            throw new ControllerReflectionException($controllerName, $e->getMessage());
         }
 
         foreach ($reflectionClass->getMethods() as $method) {
@@ -159,6 +168,10 @@ class Router
         }
     }
 
+    /**
+     * @param callable $handler
+     * @return void
+     */
     public function setNotFoundHandler(callable $handler): void
     {
         $this->notFoundHandler = $handler;
@@ -195,6 +208,6 @@ class Router
         }
 
         // If no handler is set throw an exception
-        throw new RuntimeException("Route $requestUri with method $requestMethod not found.");
+        throw new RouteNotFoundException($requestUri, $requestMethod);
     }
 }
