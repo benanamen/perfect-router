@@ -18,11 +18,10 @@
             "name": "Kevin Rubio"
         }
     ],
-    "require": {
-        "krubio/perfect-container": "^v1.0"
-    },
     "require-dev": {
-        "codeception/codeception": "^5.1",
-        "codeception/module-asserts": "*"
+        "phpunit/phpunit": "^11"
+    },
+    "require": {
+        "krubio/perfect-container": "^1.1"
     }
 }

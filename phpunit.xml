@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd" bootstrap="vendor/autoload.php" cacheDirectory=".phpunit.cache" executionOrder="depends,defects" requireCoverageMetadata="true" beStrictAboutCoverageMetadata="true" beStrictAboutOutputDuringTests="true" failOnRisky="true" failOnWarning="true" testdox="true" processIsolation="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true">
   <testsuites>
-    <testsuite name="default">
+    <testsuite name="Container Test Suite">
       <directory>tests</directory>
     </testsuite>
   </testsuites>
   <coverage>
     <report>
-      <html outputDirectory="coverage"/>
+      <html outputDirectory="coverage" lowUpperBound="35" highLowerBound="70"/>
     </report>
   </coverage>
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <ini name="memory_limit" value="-1"/>
+  </php>
   <source>
     <include>
-      <directory suffix=".php">src</directory>
-      <file>src/Router.php</file>
+      <directory>src</directory>
     </include>
     <exclude>
-        </exclude>
+      <directory>vendor</directory>
+    </exclude>
   </source>
 </phpunit>
