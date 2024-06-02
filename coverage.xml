@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1717308920">
+  <project timestamp="1717308920">
+    <file name="C:\laragon\www\perfect-router\src\Routing\Route.php">
+      <class name="PerfectApp\Routing\Route" namespace="global">
+        <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
+      </class>
+      <line num="10" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="12" type="stmt" count="1"/>
+      <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
+    </file>
+    <file name="C:\laragon\www\perfect-router\src\Routing\Router.php">
+      <class name="PerfectApp\Routing\Router" namespace="global">
+        <metrics complexity="29" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="66" coveredstatements="66" elements="74" coveredelements="74"/>
+      </class>
+      <line num="31" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="15"/>
+      <line num="33" type="stmt" count="15"/>
+      <line num="42" type="method" name="autoRegisterControllers" visibility="public" complexity="4" crap="4" count="2"/>
+      <line num="44" type="stmt" count="2"/>
+      <line num="45" type="stmt" count="1"/>
+      <line num="48" type="stmt" count="1"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="50" type="stmt" count="1"/>
+      <line num="51" type="stmt" count="1"/>
+      <line num="62" type="method" name="isValidFile" visibility="private" complexity="3" crap="3" count="6"/>
+      <line num="64" type="stmt" count="6"/>
+      <line num="73" type="method" name="registerControllerFromFile" visibility="private" complexity="4" crap="4" count="3"/>
+      <line num="75" type="stmt" count="3"/>
+      <line num="76" type="stmt" count="1"/>
+      <line num="79" type="stmt" count="2"/>
+      <line num="80" type="stmt" count="2"/>
+      <line num="81" type="stmt" count="2"/>
+      <line num="82" type="stmt" count="2"/>
+      <line num="84" type="stmt" count="2"/>
+      <line num="85" type="stmt" count="1"/>
+      <line num="88" type="stmt" count="1"/>
+      <line num="97" type="method" name="getNamespaceFromFile" visibility="private" complexity="7" crap="7" count="3"/>
+      <line num="99" type="stmt" count="3"/>
+      <line num="100" type="stmt" count="3"/>
+      <line num="101" type="stmt" count="3"/>
+      <line num="102" type="stmt" count="3"/>
+      <line num="103" type="stmt" count="3"/>
+      <line num="104" type="stmt" count="3"/>
+      <line num="106" type="stmt" count="3"/>
+      <line num="107" type="stmt" count="3"/>
+      <line num="108" type="stmt" count="3"/>
+      <line num="109" type="stmt" count="3"/>
+      <line num="110" type="stmt" count="3"/>
+      <line num="113" type="stmt" count="3"/>
+      <line num="114" type="stmt" count="3"/>
+      <line num="115" type="stmt" count="3"/>
+      <line num="116" type="stmt" count="3"/>
+      <line num="119" type="stmt" count="3"/>
+      <line num="120" type="stmt" count="3"/>
+      <line num="123" type="stmt" count="3"/>
+      <line num="124" type="stmt" count="3"/>
+      <line num="128" type="stmt" count="3"/>
+      <line num="131" type="stmt" count="1"/>
+      <line num="140" type="method" name="registerController" visibility="public" complexity="4" crap="4" count="2"/>
+      <line num="143" type="stmt" count="2"/>
+      <line num="144" type="stmt" count="1"/>
+      <line num="145" type="stmt" count="1"/>
+      <line num="148" type="stmt" count="1"/>
+      <line num="149" type="stmt" count="1"/>
+      <line num="150" type="stmt" count="1"/>
+      <line num="151" type="stmt" count="1"/>
+      <line num="152" type="stmt" count="1"/>
+      <line num="153" type="stmt" count="1"/>
+      <line num="154" type="stmt" count="1"/>
+      <line num="155" type="stmt" count="1"/>
+      <line num="156" type="stmt" count="1"/>
+      <line num="157" type="stmt" count="1"/>
+      <line num="162" type="method" name="setNotFoundHandler" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="164" type="stmt" count="1"/>
+      <line num="174" type="method" name="dispatch" visibility="public" complexity="5" crap="5" count="3"/>
+      <line num="176" type="stmt" count="3"/>
+      <line num="177" type="stmt" count="1"/>
+      <line num="179" type="stmt" count="1"/>
+      <line num="180" type="stmt" count="1"/>
+      <line num="182" type="stmt" count="1"/>
+      <line num="183" type="stmt" count="1"/>
+      <line num="185" type="stmt" count="1"/>
+      <line num="186" type="stmt" count="1"/>
+      <line num="187" type="stmt" count="1"/>
+      <line num="191" type="stmt" count="2"/>
+      <line num="192" type="stmt" count="2"/>
+      <line num="193" type="stmt" count="1"/>
+      <line num="194" type="stmt" count="1"/>
+      <line num="198" type="stmt" count="1"/>
+      <metrics loc="201" ncloc="155" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="66" coveredstatements="66" elements="74" coveredelements="74"/>
+    </file>
+    <metrics files="2" loc="215" ncloc="169" classes="2" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="67" coveredstatements="67" elements="76" coveredelements="76"/>
+  </project>
+</coverage>
