@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/benanamen/perfect-router/branch/master/graph/badge.svg?token=RXmplcPNzz)](https://codecov.io/gh/benanamen/perfect-router)
 # PerfectRouter
 
 ## Description
