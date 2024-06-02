@@ -1,4 +1,17 @@
 [![codecov](https://codecov.io/gh/benanamen/perfect-router/branch/master/graph/badge.svg?token=RXmplcPNzz)](https://codecov.io/gh/benanamen/perfect-router)
+[![SonarCloud](https://github.com/benanamen/perfect-router/actions/workflows/build.yml/badge.svg)](https://github.com/benanamen/perfect-router/actions/workflows/build.yml)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=coverage)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=bugs)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=benanamen_perfect-router&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=benanamen_perfect-router)
+
 # PerfectRouter
 
 ## Description
