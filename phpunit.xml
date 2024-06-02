@@ -27,6 +27,7 @@
       <directory>src</directory>
     </include>
     <exclude>
+      <directory>src/Exception</directory>
       <directory>vendor</directory>
     </exclude>
   </source>
