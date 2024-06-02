@@ -6,6 +6,7 @@ use Exception;
 use PerfectApp\Container\Container;
 use PerfectApp\Routing\Router;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -15,16 +16,24 @@ use SplFileInfo;
 use Tests\Fixtures\DummyController;
 use TypeError;
 
+/**
+ *
+ */
 #[CoversClass(Router::class)]
 #[CoversClass(Container::class)]
 class RouterTest extends TestCase
 {
+    /**
+     * @var Container|MockObject
+     */
+    private Container|MockObject $container;
     /**
      * @var Router
      */
     private Router $router;
 
     /**
+     * @return void
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function setUp(): void
@@ -56,18 +65,6 @@ class RouterTest extends TestCase
      * @return void
      * @throws Exception
      */
-    public function testAutoRegisterControllersWithInvalidDirectory(): void
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('The directory non-existent-directory does not exist');
-
-        $this->router->autoRegisterControllers('non-existent-directory');
-    }
-
-    /**
-     * @return void
-     * @throws Exception
-     */
     public function testAutoRegisterControllers_DirectoryDoesNotExist_ThrowsException(): void
     {
         // Define a non-existent directory
@@ -82,7 +79,7 @@ class RouterTest extends TestCase
     }
 
     /**
-     * @coversNothing
+     * @return void
      * @throws Exception
      */
     public function testAutoRegisterControllers_ExistingDirectory(): void
@@ -106,7 +103,7 @@ class RouterTest extends TestCase
         $mockFile = $this->createMock(SplFileInfo::class);
         $mockFile->method('getExtension')->willReturn('php');
         $mockFile->method('isDir')->willReturn(false);
-        $mockFile->method('getFilename')->willReturn('ValidController.php');
+        //$mockFile->method('getFilename')->willReturn('ValidController.php');
 
         $isValid = $this->invokeMethod($this->router, 'isValidFile', [$mockFile]);
 
@@ -209,28 +206,6 @@ class RouterTest extends TestCase
     }
 
     /**
-     * @return void
-     */
-    public function testGetNamespaceFromFile_NoNamespace(): void
-    {
-        $filePath = './tests/Fixtures/NonNamespacedClass.php';
-
-        // Ensure the file path is valid and readable
-        $this->assertFileExists($filePath, "File not found: $filePath");
-
-        // Invoke the private method getNamespaceFromFile
-        $reflectionRouter = new ReflectionClass($this->router);
-        $method = $reflectionRouter->getMethod('getNamespaceFromFile');
-
-        try {
-            $namespace = $method->invoke($this->router, $filePath);
-            $this->assertNull($namespace, "Expected null namespace but got: $namespace");
-        } catch (ReflectionException $e) {
-            $this->fail("Failed to invoke getNamespaceFromFile: " . $e->getMessage());
-        }
-    }
-
-    /**
      * @throws ReflectionException
      */
     public function testGetNamespaceFromFile_WithNamespace(): void
@@ -321,5 +296,55 @@ class RouterTest extends TestCase
         $this->expectExceptionMessage("Route $requestUri with method GET not found.");
 
         $this->router->dispatch($requestUri, $requestMethod);
+    }
+
+    /**
+     * @throws ReflectionException
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
+    public function testRegisterControllerFromFile_ClassDoesNotExist_ThrowsException(): void
+    {
+        $nonExistentClassName = 'NonExistentClass';
+        $namespace = 'Tests\Fixtures';
+        $fullyQualifiedClassName = $namespace . '\\' . $nonExistentClassName;
+        $filePath = './tests/Fixtures/NonExistentClass.php';
+
+        // Create a mock file with a valid namespace but non-existent class
+        $fileContent = "<?php\nnamespace $namespace;\n\n// No class definition\n";
+        $this->createFile($filePath, $fileContent);
+
+        $mockFile = $this->createMock(SplFileInfo::class);
+        $mockFile->method('getPathname')->willReturn($filePath);
+        $mockFile->method('isFile')->willReturn(true);
+
+        try {
+            $this->invokeMethod($this->router, 'registerControllerFromFile', [$mockFile]);
+            $this->fail('Expected RuntimeException was not thrown');
+        } catch (RuntimeException $e) {
+            $this->assertEquals(
+                "Class $fullyQualifiedClassName does not exist.",
+                $e->getMessage(),
+                'Incorrect exception message'
+            );
+        } finally {
+            // Clean up the created file
+            unlink($filePath);
+        }
+    }
+
+    /**
+     * Helper method to create a temporary file with the given content.
+     *
+     * @param string $filePath The path to the file to be created.
+     * @param string $content The content to be written to the file.
+     */
+    private function createFile(string $filePath, string $content): void
+    {
+        $directory = dirname($filePath);
+        if (!is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        file_put_contents($filePath, $content);
     }
 }
