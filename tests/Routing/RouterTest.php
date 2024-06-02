@@ -103,7 +103,7 @@ class RouterTest extends TestCase
         $mockFile = $this->createMock(SplFileInfo::class);
         $mockFile->method('getExtension')->willReturn('php');
         $mockFile->method('isDir')->willReturn(false);
-        //$mockFile->method('getFilename')->willReturn('ValidController.php');
+        $mockFile->method('getFilename')->willReturn('ValidController.php');
 
         $isValid = $this->invokeMethod($this->router, 'isValidFile', [$mockFile]);
 
