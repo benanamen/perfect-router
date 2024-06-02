@@ -26,7 +26,7 @@ jobs:
         run: composer update --no-ansi --no-interaction --no-progress
 
       - name: Run tests with phpunit/phpunit
-        run: vendor/bin/phpunit --coverage-clover=coverage.xml --testdox --coverage-text --colors <always>
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml --testdox --coverage-text --colors=always
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
