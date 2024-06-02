@@ -27,13 +27,13 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction --no-suggest
+        run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run tests
-        run: php ./vendor/bin/phpunit --coverage-text --coverage-html coverage tests
+        run: php ./vendor/bin/phpunit --coverage-clover coverage.xml
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: tests/_output/coverage.xml
+          files: coverage.xml
           verbose: true
