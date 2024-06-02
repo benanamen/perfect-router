@@ -20,26 +20,49 @@ Use Composer to install the PerfectRouter library.
 composer require krubio/perfect-router
 ```
 
+## Examples
+
+You can find examples in the `examples` directory of the project. Run `composer install` from the `examples` directory to install the required dependencies.
+
+```bash
+cd examples
+composer install
+````
+
 ## Usage
 
 Here's a basic usage example of PerfectRouter:
 
 ```php
-require 'vendor/autoload.php';
+<?php declare(strict_types=1);
 
+require_once './vendor/autoload.php';
+
+use PerfectApp\Container\Container;
+use PerfectApp\Logger\FileLogger;
 use PerfectApp\Routing\Router;
-use PerfectApp\Routing\Route;
 
-class MyController {
-    #[Route('/my-route', ['GET'])]
-    public function myMethod() {
-        echo 'Hello, PerfectRouter!';
-    }
+$logger = new FileLogger('errors.log');
+
+$container = new Container();
+
+$router = new Router($container);
+$router->autoRegisterControllers(__DIR__ . '/src/Controllers');
+
+// A user-defined exception handler function
+$router->setNotFoundHandler(function ($requestUri, $requestMethod) use ($logger) {
+    $logger->error("Route $requestUri with method $requestMethod not found.");
+    http_response_code(404);
+    echo "Route $requestUri with method $requestMethod not found.";
+});
+
+try {
+    $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+} catch (RuntimeException $e) {
+    $logger->error($e->getMessage());
+    http_response_code(404);
+    echo "Route not found.";
 }
-
-$router = new Router();
-$router->registerController(MyController::class);
-$router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 ```
 
 ## Contributing
